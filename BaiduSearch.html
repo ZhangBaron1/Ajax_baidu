@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BaiduSearch</title>
+    <style>
+        #q{
+            width: 300px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #f90;
+            padding: 5px;
+            font-size: 18px;
+        }
+        #list{
+            padding: 0px;
+            margin: 0px;
+            list-style: none;
+            border: 1px solid #f90;
+            width: 310px;
+            box-sizing: border-box;
+            display: none;
+        }
+        #list li{
+
+        }
+        #list li a{
+            display: block;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 5px;
+            line-height: 30px;
+            color: #000;
+
+        }
+        #list li a:hover{
+            background: #eee;
+        }
+    </style>
+    <script>
+        function  callback(data){
+            var oL = document.getElementById('list');
+            var html = '';
+            if(data.s.length)
+            {
+                oL.style.display = 'block';
+                for(var i=0; i < data.s.length; i++)
+                    html += '<li><a target="_blank" href="https://www.baidu.com/s?wd='+data.s[i]+'">'+data.s[i]+'</a></li>';
+                oL.innerHTML = html;
+            }
+            else{
+                oL.style.display = 'none';
+            }
+        }
+        window.onload = function(){
+            var q = document.getElementById('q');
+            var list = document.getElementById('list');
+            q.onkeyup = function(){
+                if(this.value != '')
+                {
+                    var oScript = document.createElement('script');
+                    oScript.src = 'http://suggestion.baidu.com/su?wd='+this.value+'&cb=callback';
+                    document.body.appendChild(oScript);
+                }
+                else{
+                    list.style.display = 'none';
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="text" id="q">
+<ul id="list">
+</ul>
+</body>
+</html>
